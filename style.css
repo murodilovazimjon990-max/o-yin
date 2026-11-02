@@ -1,0 +1,1344 @@
+/* ========================================================
+   AQLLI SVITAFOR VA YO'L HARAKATI SIMULYATORI - STYLE.CSS
+   Zamonaviy, sifatli va qulay dizayn
+   ======================================================== */
+
+:root {
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Day Theme Palette */
+  --bg-gradient: linear-gradient(135deg, #eef2f7 0%, #dbe4ef 100%);
+  --surface-card: rgba(255, 255, 255, 0.92);
+  --surface-card-border: rgba(255, 255, 255, 0.6);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  /* Environment Colors */
+  --grass-color: #78ab46;
+  --sidewalk-color: #cbd5e1;
+  --sidewalk-border: #94a3b8;
+  --road-asphalt: #2d3139;
+  --road-marking: #f8fafc;
+  --road-divider: #fbbf24;
+  --curb-stone: #475569;
+
+  /* Traffic Light Core Colors */
+  --tl-housing: #1a1d20;
+  --tl-housing-border: #33383f;
+  --red-off: #401010;
+  --red-on: #ff2a3b;
+  --red-glow: rgba(255, 42, 59, 0.85);
+  
+  --yellow-off: #443208;
+  --yellow-on: #ffb703;
+  --yellow-glow: rgba(255, 183, 3, 0.85);
+
+  --green-off: #0b3820;
+  --green-on: #10b981;
+  --green-glow: rgba(16, 185, 129, 0.85);
+
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Night Mode Theme overrides */
+body.night-mode {
+  --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 100%);
+  --surface-card: rgba(17, 24, 39, 0.88);
+  --surface-card-border: rgba(255, 255, 255, 0.08);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --grass-color: #233a1f;
+  --sidewalk-color: #334155;
+  --sidewalk-border: #1e293b;
+  --road-asphalt: #181a1f;
+  --curb-stone: #1e293b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.5s ease, color 0.3s ease;
+  overflow-x: hidden;
+  padding: 16px;
+}
+
+/* App Main Container */
+.app-container {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ----------------------------------------------------
+   HEADER & BRANDING
+   ---------------------------------------------------- */
+.app-header {
+  background: var(--surface-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-card-border);
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  font-size: 38px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+  animation: floatBounce 3s ease-in-out infinite;
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.logo-area h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(120deg, #2563eb, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.night-mode .logo-area h1 {
+  background: linear-gradient(120deg, #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Header Statistics Badges */
+.header-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stat-badge {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 8px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+body.night-mode .stat-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.stat-icon {
+  font-size: 20px;
+}
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.status-indicator {
+  color: #10b981;
+}
+
+/* ----------------------------------------------------
+   CONTROL TOOLBAR
+   ---------------------------------------------------- */
+.control-toolbar {
+  background: var(--surface-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-card-border);
+  border-radius: 14px;
+  padding: 10px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-family: var(--font-main);
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.38);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: var(--text-main);
+  border: 1px solid #cbd5e1;
+}
+body.night-mode .btn-secondary {
+  background: #1f2937;
+  color: #e5e7eb;
+  border-color: #374151;
+}
+.btn-secondary:hover {
+  background: #e2e8f0;
+}
+body.night-mode .btn-secondary:hover {
+  background: #374151;
+}
+
+.btn-pedestrian {
+  background: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+.btn-pedestrian:hover {
+  background: #0284c7;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-main);
+  border: 1.5px solid #cbd5e1;
+}
+body.night-mode .btn-outline {
+  border-color: #4b5563;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.btn-icon-only {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+body.night-mode .btn-icon-only {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f3f4f6;
+}
+.btn-icon-only:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(0,0,0,0.03);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+body.night-mode .speed-control {
+  background: rgba(255,255,255,0.05);
+}
+.speed-control input[type="range"] {
+  width: 75px;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------------
+   SIMULATION STAGE (VIEWPORT & ENVIRONMENT)
+   ---------------------------------------------------- */
+.simulation-stage-wrapper {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-card-border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.simulation-stage {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background: var(--grass-color);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+  user-select: none;
+}
+
+/* Environment Zones (Sidewalks, Lawns) */
+.environment-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 1;
+}
+
+.top-zone {
+  top: 0;
+}
+
+.bottom-zone {
+  bottom: 0;
+}
+
+/* Sidewalk pavement */
+.sidewalk-pavement {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: var(--sidewalk-color);
+  background-image: 
+    linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  transition: background-color 0.5s ease;
+}
+
+.top-pavement {
+  bottom: 0;
+  height: 70px;
+}
+
+.bottom-pavement {
+  top: 0;
+  height: 70px;
+}
+
+/* Curbs between pavement and road */
+.curb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    #ffffff 0px, #ffffff 40px,
+    #111827 40px, #111827 80px
+  );
+  z-index: 5;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.top-curb {
+  bottom: 0;
+}
+
+.bottom-curb {
+  top: 0;
+}
+
+/* Scenery Items (Trees & Street Lamps) */
+.scenery-item {
+  position: absolute;
+  z-index: 3;
+}
+
+.tree {
+  font-size: 36px;
+  filter: drop-shadow(2px 6px 4px rgba(0,0,0,0.3));
+  transition: transform 0.3s ease;
+}
+.tree:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.tree-1 { top: 10px; left: 60px; }
+.tree-2 { top: 12px; right: 100px; }
+.tree-3 { bottom: 15px; left: 120px; }
+.tree-4 { bottom: 15px; right: 80px; }
+
+/* Street Lamp */
+.street-lamp {
+  width: 20px;
+  height: 70px;
+}
+
+.lamp-left {
+  top: 25px;
+  left: 330px;
+}
+.lamp-right {
+  top: 25px;
+  right: 330px;
+}
+
+.lamp-post {
+  position: absolute;
+  bottom: 0;
+  left: 8px;
+  width: 4px;
+  height: 60px;
+  background: #334155;
+  border-radius: 2px;
+}
+
+.lamp-bulb {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  background: #f8fafc;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255,255,255,0.8);
+  transition: var(--transition-smooth);
+}
+
+body.night-mode .lamp-bulb {
+  background: #fff3b0;
+  box-shadow: 0 0 20px #ffea79, 0 0 40px #ffd000;
+}
+
+.lamp-light-cone {
+  position: absolute;
+  top: 10px;
+  left: -40px;
+  width: 100px;
+  height: 120px;
+  background: radial-gradient(ellipse at top, rgba(255, 235, 120, 0.22) 0%, rgba(255, 235, 120, 0) 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.night-mode .lamp-light-cone {
+  opacity: 1;
+}
+
+/* Road Signs */
+.road-sign {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-triangle {
+  width: 28px;
+  height: 28px;
+  background: #2563eb;
+  border: 2px solid #ffffff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+.sign-symbol {
+  font-size: 14px;
+}
+
+.sign-pole {
+  width: 3px;
+  height: 34px;
+  background: #94a3b8;
+}
+
+.top-sign {
+  top: 25px;
+  left: 450px;
+}
+.bottom-sign {
+  bottom: 25px;
+  right: 450px;
+}
+
+/* Pedestrian Waiting Area indicators */
+.pedestrian-waiting-area {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 45px;
+  border: 2px dashed rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+
+.top-waiting-zone {
+  bottom: 8px;
+}
+
+.bottom-waiting-zone {
+  top: 8px;
+}
+
+.waiting-indicator-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Pedestrian Push Button Post */
+.ped-button-post {
+  position: absolute;
+  bottom: 25px;
+  left: 490px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.ped-button-post:hover {
+  transform: scale(1.08);
+}
+
+.ped-button-box {
+  width: 34px;
+  height: 48px;
+  background: #facc15;
+  border: 2px solid #ca8a04;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.ped-button-screen {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 800;
+  background: #0f172a;
+  color: #ef4444;
+  padding: 2px 4px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.ped-button-screen.active {
+  color: #10b981;
+  background: #022c22;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.ped-push-btn {
+  width: 22px;
+  height: 22px;
+  background: #ef4444;
+  border: 2px solid #b91c1c;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3);
+}
+
+.ped-push-btn:active {
+  transform: scale(0.9);
+}
+
+.ped-post-pole {
+  width: 5px;
+  height: 30px;
+  background: #475569;
+}
+
+/* ----------------------------------------------------
+   ROADWAY & TRAFFIC LANES
+   ---------------------------------------------------- */
+.roadway {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background-color: var(--road-asphalt);
+  background-image: 
+    radial-gradient(rgba(255,255,255,0.03) 1px, transparent 0);
+  background-size: 16px 16px;
+  z-index: 2;
+  overflow: visible;
+  transition: background-color 0.5s ease;
+}
+
+/* Lane divisions */
+.road-lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 118px;
+  pointer-events: none;
+}
+
+.lane-eastbound {
+  top: 0;
+}
+
+.lane-westbound {
+  bottom: 0;
+}
+
+/* Lane Direction Arrows */
+.lane-direction-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+.arrow-left {
+  left: 80px;
+}
+
+.arrow-right {
+  right: 80px;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Road Center Line (Yellow dashed divider) */
+.road-centerline {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--road-divider) 0px, var(--road-divider) 35px,
+    transparent 35px, transparent 65px
+  );
+  z-index: 3;
+}
+
+/* White Stop Lines before the zebra crossing */
+.stop-line {
+  position: absolute;
+  top: 0;
+  width: 8px;
+  background: #ffffff;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(255,255,255,0.4);
+}
+
+.stop-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 900;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+}
+
+/* Left stop line (for eastbound traffic going right, located on upper half) */
+.stop-line-left {
+  left: calc(50% - 95px);
+  top: 0;
+  height: 118px;
+}
+
+.stop-line-left .stop-label {
+  left: -48px;
+}
+
+/* Right stop line (for westbound traffic going left, located on lower half) */
+.stop-line-right {
+  left: calc(50% + 90px);
+  top: 122px;
+  height: 118px;
+}
+
+.stop-line-right .stop-label {
+  right: -48px;
+}
+
+/* Zebra Crossing in the middle */
+.zebra-crossing {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.zebra-stripe {
+  width: 100%;
+  height: 14px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* Dynamic entities layers (Cars & Pedestrians) */
+.entities-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ----------------------------------------------------
+   TRAFFIC LIGHT FIXTURES & HOUSINGS
+   ---------------------------------------------------- */
+.traffic-lights-system {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.traffic-light-post {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+/* Car Traffic Light Unit (located at top road edge near left stop line) */
+.car-light-unit {
+  top: 45px;
+  left: calc(50% - 145px);
+}
+
+/* Pedestrian Traffic Light Unit (located at bottom road edge near zebra) */
+.ped-light-unit {
+  bottom: 45px;
+  right: calc(50% - 135px);
+}
+
+/* Digital LED Countdown Timer */
+.tl-timer {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 800;
+  background: #090b0e;
+  color: #10b981;
+  border: 2px solid #2d3748;
+  border-radius: 6px;
+  padding: 2px 7px;
+  min-width: 32px;
+  text-align: center;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  text-shadow: 0 0 6px currentColor;
+  transition: color 0.2s ease;
+}
+
+.tl-timer.timer-red {
+  color: #ff3344;
+}
+
+.tl-timer.timer-yellow {
+  color: #f59e0b;
+}
+
+.tl-timer.timer-green {
+  color: #10b981;
+}
+
+/* Traffic Light Housing (Matte Black Box) */
+.tl-housing {
+  background: var(--tl-housing);
+  border: 3px solid var(--tl-housing-border);
+  border-radius: 12px;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+}
+
+.ped-housing {
+  border-radius: 10px;
+  padding: 7px 6px;
+}
+
+/* Sun visors (koziryok) over lamps */
+.tl-visor {
+  width: 100%;
+  height: 4px;
+  background: #0b0d0e;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: -4px;
+  z-index: 2;
+}
+
+/* Light Bulbs / Lenses */
+.light-bulb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #1e2226;
+  border: 2px solid #14171a;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bulb-inner {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* Bulbs Off States */
+.bulb-red { background: var(--red-off); }
+.bulb-yellow { background: var(--yellow-off); }
+.bulb-green { background: var(--green-off); }
+
+.bulb-ped-red { background: var(--red-off); }
+.bulb-ped-green { background: var(--green-off); }
+
+/* Bulbs ON States with realistic Bloom/Glow */
+.bulb-red.active {
+  background: var(--red-on);
+  box-shadow: 0 0 16px var(--red-glow), 0 0 32px var(--red-glow), inset 0 0 8px #ffffff;
+}
+
+.bulb-yellow.active {
+  background: var(--yellow-on);
+  box-shadow: 0 0 16px var(--yellow-glow), 0 0 32px var(--yellow-glow), inset 0 0 8px #ffffff;
+}
+
+.bulb-green.active {
+  background: var(--green-on);
+  box-shadow: 0 0 16px var(--green-glow), 0 0 32px var(--green-glow), inset 0 0 8px #ffffff;
+}
+
+.bulb-ped-red.active {
+  background: var(--red-on);
+  box-shadow: 0 0 14px var(--red-glow), inset 0 0 6px #ffffff;
+}
+
+.bulb-ped-green.active {
+  background: var(--green-on);
+  box-shadow: 0 0 14px var(--green-glow), inset 0 0 6px #ffffff;
+}
+
+/* Pedestrian Light Icons inside bulbs */
+.ped-icon {
+  width: 17px;
+  height: 17px;
+  color: rgba(255, 255, 255, 0.2);
+  transition: color 0.2s ease, filter 0.2s ease;
+}
+
+.bulb-ped-red.active .ped-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 0 4px #ff3344);
+}
+
+.bulb-ped-green.active .ped-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 0 4px #10b981);
+  animation: pedWalkBlink 0.8s infinite alternate ease-in-out;
+}
+
+@keyframes pedWalkBlink {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+.tl-label {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 800;
+  color: #cbd5e1;
+  background: #334155;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-top: 3px;
+  letter-spacing: 0.5px;
+}
+
+.tl-pole {
+  width: 6px;
+  height: 38px;
+  background: #475569;
+  border-radius: 0 0 2px 2px;
+}
+
+/* ----------------------------------------------------
+   CARS STYLING & VEHICLE MODELS
+   ---------------------------------------------------- */
+.car {
+  position: absolute;
+  width: 96px;
+  height: 48px;
+  border-radius: 10px;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: filter 0.2s ease;
+  z-index: 12;
+}
+
+.car:hover {
+  filter: brightness(1.15);
+}
+
+/* Car Body SVG container */
+.car-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Car Headlights Beams (prominent in night mode) */
+.car-headlights {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 120px;
+  height: 70px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.car-heading-east .car-headlights {
+  left: 90px;
+  background: radial-gradient(ellipse at left, rgba(255, 255, 230, 0.45) 0%, rgba(255, 255, 200, 0) 70%);
+}
+
+.car-heading-west .car-headlights {
+  right: 90px;
+  background: radial-gradient(ellipse at right, rgba(255, 255, 230, 0.45) 0%, rgba(255, 255, 200, 0) 70%);
+}
+
+body.night-mode .car-headlights {
+  opacity: 1;
+}
+
+/* Brake Lights */
+.car-brake-light {
+  position: absolute;
+  width: 4px;
+  height: 8px;
+  background: #7f1d1d;
+  border-radius: 2px;
+  opacity: 0.5;
+  transition: opacity 0.1s ease, box-shadow 0.1s ease;
+}
+
+.car-heading-east .brake-top { left: 2px; top: 8px; }
+.car-heading-east .brake-bottom { left: 2px; bottom: 8px; }
+
+.car-heading-west .brake-top { right: 2px; top: 8px; }
+.car-heading-west .brake-bottom { right: 2px; bottom: 8px; }
+
+.car.braking .car-brake-light {
+  background: #ff2233;
+  opacity: 1;
+  box-shadow: 0 0 12px #ff2233, 0 0 20px #ff2233;
+}
+
+/* ----------------------------------------------------
+   PEDESTRIANS STYLING & ANIMATION
+   ---------------------------------------------------- */
+.pedestrian {
+  position: absolute;
+  width: 26px;
+  height: 38px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: filter 0.2s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.pedestrian:hover {
+  filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.6));
+}
+
+.ped-head {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffdbac;
+  border: 1px solid rgba(0,0,0,0.2);
+  z-index: 3;
+}
+
+.ped-torso {
+  width: 18px;
+  height: 16px;
+  border-radius: 5px;
+  margin-top: -2px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.ped-legs {
+  display: flex;
+  gap: 4px;
+  margin-top: -2px;
+}
+
+.ped-leg {
+  width: 5px;
+  height: 12px;
+  background: #1e293b;
+  border-radius: 2px;
+  transform-origin: top center;
+}
+
+/* Walking stride animation */
+.pedestrian.walking .leg-left {
+  animation: legStrideLeft 0.5s infinite alternate ease-in-out;
+}
+
+.pedestrian.walking .leg-right {
+  animation: legStrideRight 0.5s infinite alternate ease-in-out;
+}
+
+.pedestrian.walking {
+  animation: bodyBob 0.25s infinite alternate ease-in-out;
+}
+
+@keyframes legStrideLeft {
+  0% { transform: translateY(-3px) rotate(-25deg); }
+  100% { transform: translateY(2px) rotate(25deg); }
+}
+
+@keyframes legStrideRight {
+  0% { transform: translateY(2px) rotate(25deg); }
+  100% { transform: translateY(-3px) rotate(-25deg); }
+}
+
+@keyframes bodyBob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-2px); }
+}
+
+/* Pedestrian speech bubble / status */
+.ped-bubble {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  color: #f8fafc;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.pedestrian:hover .ped-bubble {
+  opacity: 1;
+}
+
+/* ----------------------------------------------------
+   BOTTOM DASHBOARD (CONTROLS & TRAFFIC RULES GUIDE)
+   ---------------------------------------------------- */
+.app-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.dashboard-card {
+  background: var(--surface-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--surface-card-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Manual Controller Buttons */
+.manual-buttons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.manual-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+body.night-mode .manual-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+.manual-btn:hover {
+  transform: translateX(4px);
+  border-color: var(--primary);
+}
+
+.manual-btn.active-phase {
+  border-color: var(--primary);
+  background: rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.2);
+}
+
+.dot-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+.dot-yellow { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+.dot-green { background: #10b981; box-shadow: 0 0 8px #10b981; }
+
+/* Settings Grid */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.input-with-unit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-with-unit input,
+.input-with-unit select {
+  font-family: var(--font-main);
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: var(--text-main);
+}
+body.night-mode .input-with-unit input,
+body.night-mode .input-with-unit select {
+  background: #1f2937;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+/* Traffic Rules Box */
+.status-box {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.status-pill {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pill-green {
+  background: #10b981;
+  color: #ffffff;
+}
+
+.status-pill-red {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.status-pill-yellow {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+#current-rule-explanation {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.rules-quick-tips {
+  margin-top: auto;
+}
+
+.tip-badge {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--primary);
+  background: rgba(37, 99, 235, 0.08);
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: block;
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE DESIGN
+   ---------------------------------------------------- */
+@media (max-width: 900px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .control-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .toolbar-group {
+    justify-content: space-between;
+  }
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aqlli Svitafor va Yo'l Harakati Simulyatori</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="logo-icon">🚦</div>
+        <div>
+          <h1>Aqlli Svitafor Simulyatori</h1>
+          <p class="subtitle">Avtomobillar va piyodalar harakati xavfsizligi tizimi</p>
+        </div>
+      </div>
+      
+      <!-- Top Quick Stats -->
+      <div class="header-stats">
+        <div class="stat-badge">
+          <span class="stat-icon">🚗</span>
+          <div>
+            <div class="stat-label">O'tgan mashinalar</div>
+            <div class="stat-value" id="stat-cars-passed">0</div>
+          </div>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-icon">🚶</span>
+          <div>
+            <div class="stat-label">O'tgan piyodalar</div>
+            <div class="stat-value" id="stat-peds-passed">0</div>
+          </div>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-icon">⏱️</span>
+          <div>
+            <div class="stat-label">Rejim</div>
+            <div class="stat-value status-indicator" id="stat-mode">Avtomatik</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Control Toolbar -->
+    <div class="control-toolbar">
+      <div class="toolbar-group">
+        <button id="btn-toggle-play" class="btn btn-primary" title="To'xtatish yoki davom ettirish">
+          <span class="btn-icon">⏸️</span> <span id="btn-play-text">Pauza</span>
+        </button>
+        <button id="btn-mode-toggle" class="btn btn-secondary">
+          <span class="btn-icon">🔄</span> <span id="mode-text">Qo'lda boshqarish</span>
+        </button>
+      </div>
+
+      <div class="toolbar-group">
+        <button id="btn-ped-request" class="btn btn-pedestrian" title="Piyoda o'tish tugmasini bosish">
+          <span class="btn-icon">🔘</span> Piyoda tugmasi
+        </button>
+        <button id="btn-add-car" class="btn btn-outline">
+          <span class="btn-icon">➕🚗</span> Mashina
+        </button>
+        <button id="btn-add-ped" class="btn btn-outline">
+          <span class="btn-icon">➕🚶</span> Piyoda
+        </button>
+      </div>
+
+      <div class="toolbar-group">
+        <div class="speed-control">
+          <label for="speed-range">Tezlik: <span id="speed-label">1.0x</span></label>
+          <input type="range" id="speed-range" min="0.5" max="2.5" step="0.25" value="1.0">
+        </div>
+        <button id="btn-theme-toggle" class="btn btn-icon-only" title="Kunduzgi / Tungi rejim">
+          🌙
+        </button>
+        <button id="btn-sound-toggle" class="btn btn-icon-only" title="Ovozni yoqish / o'chirish">
+          🔊
+        </button>
+      </div>
+    </div>
+
+    <!-- Simulation Main Stage -->
+    <main class="simulation-stage-wrapper">
+      <div class="simulation-stage" id="stage">
+        
+        <!-- Environment: Top Sidewalk / Greenery -->
+        <div class="environment-zone top-zone">
+          <div class="curb top-curb"></div>
+          <div class="sidewalk-pavement top-pavement"></div>
+          
+          <!-- Scenery Elements -->
+          <div class="scenery-item tree tree-1">🌳</div>
+          <div class="scenery-item tree tree-2">🌲</div>
+          <div class="scenery-item street-lamp lamp-left">
+            <div class="lamp-post"></div>
+            <div class="lamp-bulb"></div>
+            <div class="lamp-light-cone"></div>
+          </div>
+          <div class="scenery-item street-lamp lamp-right">
+            <div class="lamp-post"></div>
+            <div class="lamp-bulb"></div>
+            <div class="lamp-light-cone"></div>
+          </div>
+          <div class="road-sign sign-pedestrian top-sign" title="Piyodalar o'tish joyi">
+            <div class="sign-triangle">
+              <span class="sign-symbol">🚶‍♂️</span>
+            </div>
+            <div class="sign-pole"></div>
+          </div>
+
+          <!-- Waiting area marker for pedestrians -->
+          <div class="pedestrian-waiting-area top-waiting-zone">
+            <span class="waiting-indicator-label">Kutish hududi</span>
+          </div>
+        </div>
+
+        <!-- The Roadway -->
+        <div class="roadway" id="roadway">
+          <!-- Road Asphalt & Markings -->
+          <div class="road-lane lane-eastbound" id="lane-top">
+            <div class="lane-direction-arrow arrow-left">➔</div>
+          </div>
+          
+          <div class="road-centerline"></div>
+          
+          <div class="road-lane lane-westbound" id="lane-bottom">
+            <div class="lane-direction-arrow arrow-right">➔</div>
+          </div>
+
+          <!-- Stop Lines before zebra crossing -->
+          <div class="stop-line stop-line-left" title="Avtomobillar to'xtash chizig'i (STOP)">
+            <span class="stop-label">STOP</span>
+          </div>
+          <div class="stop-line stop-line-right" title="Avtomobillar to'xtash chizig'i (STOP)">
+            <span class="stop-label">STOP</span>
+          </div>
+
+          <!-- Zebra Crosswalk in the middle -->
+          <div class="zebra-crossing" id="zebra-crossing">
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+            <div class="zebra-stripe"></div>
+          </div>
+
+          <!-- Dynamic Car entities container -->
+          <div class="entities-layer" id="cars-layer"></div>
+
+          <!-- Dynamic Pedestrian entities container -->
+          <div class="entities-layer" id="pedestrians-layer"></div>
+        </div>
+
+        <!-- Environment: Bottom Sidewalk / Greenery -->
+        <div class="environment-zone bottom-zone">
+          <div class="curb bottom-curb"></div>
+          <div class="sidewalk-pavement bottom-pavement"></div>
+
+          <div class="scenery-item tree tree-3">🌳</div>
+          <div class="scenery-item tree tree-4">🌲</div>
+          <div class="road-sign sign-pedestrian bottom-sign" title="Piyodalar o'tish joyi">
+            <div class="sign-triangle">
+              <span class="sign-symbol">🚶‍♂️</span>
+            </div>
+            <div class="sign-pole"></div>
+          </div>
+
+          <!-- Pedestrian interactive call pole on the sidewalk -->
+          <div class="ped-button-post" id="ped-physical-button" title="Piyodalar chaqirish tugmasi">
+            <div class="ped-button-box">
+              <div class="ped-button-screen" id="ped-call-indicator">KUTING</div>
+              <button class="ped-push-btn" id="ped-physical-btn" aria-label="Piyoda tugmasi"></button>
+            </div>
+            <div class="ped-post-pole"></div>
+          </div>
+
+          <div class="pedestrian-waiting-area bottom-waiting-zone">
+            <span class="waiting-indicator-label">Kutish hududi</span>
+          </div>
+        </div>
+
+        <!-- Traffic Light System Displays (Mounted on intersection) -->
+        <div class="traffic-lights-system">
+          
+          <!-- Car Traffic Light Unit (Left/Westbound facing) -->
+          <div class="traffic-light-post car-light-unit" id="car-traffic-light">
+            <div class="tl-timer" id="car-timer">10</div>
+            <div class="tl-housing">
+              <div class="tl-visor"></div>
+              <div class="light-bulb bulb-red" id="car-light-red">
+                <div class="bulb-inner"></div>
+              </div>
+              <div class="tl-visor"></div>
+              <div class="light-bulb bulb-yellow" id="car-light-yellow">
+                <div class="bulb-inner"></div>
+              </div>
+              <div class="tl-visor"></div>
+              <div class="light-bulb bulb-green" id="car-light-green">
+                <div class="bulb-inner"></div>
+              </div>
+            </div>
+            <div class="tl-label">AVTO</div>
+            <div class="tl-pole"></div>
+          </div>
+
+          <!-- Pedestrian Traffic Light Unit -->
+          <div class="traffic-light-post ped-light-unit" id="ped-traffic-light">
+            <div class="tl-timer" id="ped-timer">10</div>
+            <div class="tl-housing ped-housing">
+              <div class="tl-visor"></div>
+              <div class="light-bulb bulb-ped-red" id="ped-light-red">
+                <svg viewBox="0 0 24 24" class="ped-icon ped-stop-icon">
+                  <!-- Standing human silhouette -->
+                  <circle cx="12" cy="4" r="2.5" fill="currentColor"/>
+                  <path d="M10 7.5 C8.5 7.5, 7.5 8.5, 7.5 10 L7.5 15 C7.5 15.5, 8 16, 8.5 16 L9.5 16 L9.5 22 C9.5 22.5, 10 23, 10.5 23 L11.5 23 C12 23, 12.5 22.5, 12.5 22 L12.5 17 L13.5 17 L13.5 22 C13.5 22.5, 14 23, 14.5 23 L15.5 23 C16 23, 16.5 22.5, 16.5 22 L16.5 16 L17.5 16 C18 16, 18.5 15.5, 18.5 15 L18.5 10 C18.5 8.5, 17.5 7.5, 16 7.5 Z" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="tl-visor"></div>
+              <div class="light-bulb bulb-ped-green" id="ped-light-green">
+                <svg viewBox="0 0 24 24" class="ped-icon ped-walk-icon">
+                  <!-- Walking human silhouette -->
+                  <circle cx="14" cy="4" r="2.5" fill="currentColor"/>
+                  <path d="M12.5 7.5 C11.5 7.5, 10 8.2, 9.5 9.5 L8 13.5 C7.8 14.1, 8.2 14.8, 8.8 15 L9 15.1 C9.6 15.3, 10.2 14.9, 10.4 14.3 L11.3 11.8 L13 13.2 L10.5 21.2 C10.3 21.8, 10.7 22.5, 11.3 22.7 L11.5 22.7 C12.1 22.9, 12.8 22.5, 13 21.9 L15 15.5 L17.5 18 C18 18.5, 18.8 18.5, 19.3 18 L20.5 16.8 C21 16.3, 21 15.5, 20.5 15 L16.8 11.3 L15.2 8.6 C14.6 7.8, 13.6 7.5, 12.5 7.5 Z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+            <div class="tl-label">PIYODA</div>
+            <div class="tl-pole"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Bottom Dashboard: Controls & Traffic Rules Guide -->
+    <footer class="app-dashboard">
+      <!-- Manual Controller Panel -->
+      <div class="dashboard-card" id="manual-controls-card">
+        <h3 class="card-title">
+          <span>🎛️</span> Svitaforni Qo'lda Boshqarish
+        </h3>
+        <p class="card-desc">Tugmalarni bosib kerakli chiroqni darhol yoqing:</p>
+        <div class="manual-buttons-grid">
+          <button class="manual-btn btn-set-red" id="btn-force-red">
+            <span class="dot-indicator dot-red"></span> Avto Qizil (Piyoda Yashil)
+          </button>
+          <button class="manual-btn btn-set-yellow" id="btn-force-yellow">
+            <span class="dot-indicator dot-yellow"></span> Avto Sariq (Ogohlantirish)
+          </button>
+          <button class="manual-btn btn-set-green" id="btn-force-green">
+            <span class="dot-indicator dot-green"></span> Avto Yashil (Piyoda Qizil)
+          </button>
+        </div>
+      </div>
+
+      <!-- Settings & Timers -->
+      <div class="dashboard-card">
+        <h3 class="card-title">
+          <span>⚙️</span> Vaqt Sozlamalari & Zichlik
+        </h3>
+        <div class="settings-grid">
+          <div class="setting-item">
+            <label for="car-green-duration">Avto Yashil vaqti:</label>
+            <div class="input-with-unit">
+              <input type="number" id="car-green-duration" min="5" max="30" value="10">
+              <span>sekund</span>
+            </div>
+          </div>
+          <div class="setting-item">
+            <label for="ped-green-duration">Piyoda Yashil vaqti:</label>
+            <div class="input-with-unit">
+              <input type="number" id="ped-green-duration" min="5" max="25" value="8">
+              <span>sekund</span>
+            </div>
+          </div>
+          <div class="setting-item">
+            <label for="traffic-density">Trafik zichligi:</label>
+            <div class="input-with-unit">
+              <select id="traffic-density">
+                <option value="light">Kam (Sokin)</option>
+                <option value="medium" selected>O'rtacha (Normal)</option>
+                <option value="heavy">Yuqori (Tig'iz)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Traffic Rules & Real-time Status Card -->
+      <div class="dashboard-card rules-card">
+        <h3 class="card-title">
+          <span>📖</span> Yo'l Harakati Qoidalari & Holat
+        </h3>
+        <div class="status-box" id="status-message-box">
+          <div class="status-pill status-pill-green" id="current-rule-badge">Hozirgi holat: AVTO YASHIL</div>
+          <p id="current-rule-explanation">
+            Avtomobillar yo'l bo'ylab erkin harakatlanadi. Piyodalar esa xavfsizlik uchun trotuarda to'xtab kutishadi.
+          </p>
+        </div>
+        <div class="rules-quick-tips">
+          <span class="tip-badge">💡 Maslahat: Piyoda o'tishi uchun "Piyoda tugmasi"ni bosing!</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
